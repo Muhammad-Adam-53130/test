@@ -28,8 +28,8 @@
                 <li class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
                 </li>
-                <li class="nav-item {{ request()->routeIs('user') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('user') }}">Users</a>
+                <li class="nav-item {{ request()->routeIs('users.user') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('users.user') }}">Users</a>
                 </li>
                 <li class="nav-item {{ request()->routeIs('form') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('form') }}">Form</a>

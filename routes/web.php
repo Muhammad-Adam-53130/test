@@ -14,7 +14,14 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () { return view('dashboard'); })->name('dashboard');
-    Route::get('/users', [UserController::class, 'index'])->name('user');
+    Route::name('users.')->prefix('users')->group(function () {
+        Route::get('/', [UserController::class, 'index'])->name('user');
+        Route::get('/create', [UserController::class, 'create'])->name('create');
+        Route::post('/store', [UserController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [UserController::class, 'edit'])->name('edit');
+        Route::post('/update/{id}', [UserController::class, 'update'])->name('update');
+        Route::get('/delete/{id}', [UserController::class, 'destroy'])->name('destroy');
+    });
     
     Route::get('/form/{name?}', function(Request $request, $name = null) {
         $name = $request->query('name', $name ?? 'no data');

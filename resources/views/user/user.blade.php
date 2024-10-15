@@ -8,6 +8,7 @@
         <div class="container">
             <div class="card shadow">
                 <div class="card-body">
+                    <a href="{{ route('users.create') }}" class="btn btn-primary mb-2 float-end">Create</a>
                     <table class="table table-bordered">
                         <thead class="table-light">
                             <tr>
@@ -24,8 +25,9 @@
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>
-                                        <a href="#" class="text-primary">Edit</a>
-                                        <a href="#" class="text-danger ms-2">Delete</a>
+                                        <a href="{{ route('users.edit', ['id' => Crypt::encryptString($user->id)]) }}"
+                                            class="btn btn-primary">Edit</a>
+                                        <a href="{{ route('users.destroy', ['id' => Crypt::encryptString($user->id)]) }}" class="btn btn-danger mt-2 d-sm-inline">Delete</a>
                                     </td>
                                 </tr>
                             @empty
