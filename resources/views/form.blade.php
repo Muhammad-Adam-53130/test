@@ -1,4 +1,61 @@
-<x-app-layout>
+@extends('layouts.main')
+@section('content')
+    <div class="mt-4 text-center">
+        <h1>Form</h1>
+        <p>This is form page.</p>
+    </div>
+    <div class="py-5">
+        <div class="container">
+            <div class="col-md-6 mx-auto">
+                <form action="{{ route('form') }}" method="GET" class="d-flex flex-column align-items-center">
+                    @if ($name == 'kacang')
+                        <button type="button" onclick="resetForm()" class="btn btn-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="black"
+                                class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z" />
+                                <path
+                                    d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466" />
+                            </svg>
+                        </button>
+                        <p class="font-weight-semibold text-xl text-dark">
+                            Haaa... what are you doing...?
+                        </p>
+                    @else
+                        <input type="text" name="name" placeholder="Enter your input"
+                            class="form-control mb-3 text-center" autocomplete="off">
+                        <button type="submit" class="btn btn-primary mb-3">
+                            Submit
+                        </button>
+                        <button type="button" onclick="resetForm()" class="btn btn-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="black"
+                                class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z" />
+                                <path
+                                    d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466" />
+                            </svg>
+                        </button>
+                    @endif
+                </form>
+                @if ($name != 'kacang')
+                    <div class="mt-4 p-3 border rounded bg-light">
+                        <p class="font-weight-semibold text-xl text-dark">
+                            Result: <span class="font-weight-bold text-primary">{{ $name ?? 'no data' }}</span>
+                        </p>
+                    </div>
+                @endif
+            </div>
+        </div>
+    </div>
+    <script>
+        function resetForm() {
+            let baseUrl = "{{ route('form') }}"; // Use the route directly
+            window.location.href = baseUrl;
+        }
+    </script>
+@endsection
+{{-- <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ 'Form' }}
@@ -61,4 +118,4 @@
         let baseUrl = "{{ route('form') }}"; // Use the route directly
         window.location.href = baseUrl;
     }
-</script>
+</script> --}}

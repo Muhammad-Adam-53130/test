@@ -1,4 +1,46 @@
-<x-app-layout>
+@extends('layouts.main')
+@section('content')
+    <div class="mt-4 text-center">
+        <h1>Users</h1>
+        <p>This is users page.</p>
+    </div>
+    <div class="py-5">
+        <div class="container">
+            <div class="card shadow">
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead class="table-light">
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($users as $user)
+                                <tr>
+                                    <td>{{ $user->id }}</td>
+                                    <td>{{ $user->name }}</td>
+                                    <td>{{ $user->email }}</td>
+                                    <td>
+                                        <a href="#" class="text-primary">Edit</a>
+                                        <a href="#" class="text-danger ms-2">Delete</a>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="4" class="text-center">Data Not Found</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+{{-- <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Users') }}
@@ -41,4 +83,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+</x-app-layout> --}}
