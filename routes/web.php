@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 Route::get('/', function () {
     return view('welcome');
@@ -11,30 +13,11 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-    Route::get('/users', function () {
-        return view('user');
-    })->name('user');
-
-    Route::name('food')->group(function(){
-        Route::get('/details', function(){
-            return 'Food details are following';
-        });
-
-        Route::get('/home', function(){
-            return 'Food home page';
-        });
-    });
-
-    Route::name('job')->prefix('job')->group(function(){
-        Route::get('home', function(){
-            return 'job home page';
-        })->name('.home');
-
-        Route::get('details', function(){
-            return 'Job details are following';
-        })->name('.descriptions');
-    });
+    Route::get('/dashboard', function () { return view('dashboard'); })->name('dashboard');
+    Route::get('/users', [UserController::class, 'index'])->name('user');
+    
+    Route::get('/home', function(Request $request) {
+        $name = $request->query('name', 'no data');
+        return view('home', ['name' => $name]);
+    })->name('home');
 });
