@@ -22,8 +22,13 @@
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">
-                        {{ __('Home') }}
+                    <x-nav-link href="{{ route('form') }}" :active="request()->routeIs('form')">
+                        {{ __('Form') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link href="{{ route('about') }}" :active="request()->routeIs('about')">
+                        {{ __('About') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -159,8 +164,13 @@
             </x-responsive-nav-link>
         </div>
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">
-                {{ __('Home') }}
+            <x-responsive-nav-link href="{{ route('form') }}" :active="request()->routeIs('form')">
+                {{ __('Form') }}
+            </x-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link href="{{ route('about') }}" :active="request()->routeIs('about')">
+                {{ __('About') }}
             </x-responsive-nav-link>
         </div>
 

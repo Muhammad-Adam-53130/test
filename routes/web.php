@@ -16,8 +16,11 @@ Route::middleware([
     Route::get('/dashboard', function () { return view('dashboard'); })->name('dashboard');
     Route::get('/users', [UserController::class, 'index'])->name('user');
     
-    Route::get('/home', function(Request $request) {
-        $name = $request->query('name', 'no data');
-        return view('home', ['name' => $name]);
-    })->name('home');
+    Route::get('/form/{name?}', function(Request $request, $name = null) {
+        $name = $request->query('name', $name ?? 'no data');
+        return view('form', ['name' => $name]);
+    })->name('form');
+    Route::get('/about', function() {
+        return view('about');
+    })->name('about');
 });
