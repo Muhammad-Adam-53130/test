@@ -35,7 +35,7 @@
                                     <tr>
                                         <td>
                                             <a href="{{ route('feed.index', ['user_id' => Crypt::encryptString($user->id)]) }}"
-                                                title="Show Feed" data-toggle="tooltip" data-placement="top" class="text-decoration-none">
+                                                title="Show Feed" data-toggle="tooltip" data-placement="top" class="text-decoration-none text-uppercase">
                                                 {{ $user->name }}
                                             </a>
                                         </td>
