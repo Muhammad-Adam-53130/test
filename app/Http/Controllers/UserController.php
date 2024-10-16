@@ -17,7 +17,7 @@ class UserController extends Controller
     public function index()
     {
         $data = [
-            'users' => User::all(),
+            'users' => User::paginate(5),
         ];
         return view('user.user', $data);
     }
@@ -43,10 +43,10 @@ class UserController extends Controller
                 'max:255',
             ],
             'password' => [
-                        'required',
-                        'confirmed',
-                        'regex:/^(?=.*\d)(?=.*[A-Z])(?=.*[!@#$%^&*]).{9,}$/'
-                    ],
+                'required',
+                'confirmed',
+                'regex:/^(?=.*\d)(?=.*[A-Z])(?=.*[!@#$%^&*]).{9,}$/'
+            ],
             'password_confirmation' => 'required',
         ]);
 
@@ -78,7 +78,7 @@ class UserController extends Controller
         } catch (DecryptException $e) {
             return redirect()->back()->with('error', 'ID not valid.');
         }
-        
+
         $user = User::findOrFail($id);
 
         return view('user.user-update', compact('user'));

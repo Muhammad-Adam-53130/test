@@ -4,7 +4,7 @@
         <h1>Users</h1>
         <p>This is users page.</p>
     </div>
-    <div class="py-5">
+    <div class="py-2">
         <div class="container">
             <div class="card shadow">
                 <div class="card-body">
@@ -27,7 +27,8 @@
                                     <td>
                                         <a href="{{ route('users.edit', ['id' => Crypt::encryptString($user->id)]) }}"
                                             class="btn btn-primary">Edit</a>
-                                        <a href="{{ route('users.destroy', ['id' => Crypt::encryptString($user->id)]) }}" class="btn btn-danger mt-2 d-sm-inline">Delete</a>
+                                        <a href="{{ route('users.destroy', ['id' => Crypt::encryptString($user->id)]) }}"
+                                            class="btn btn-danger mt-2 d-sm-inline">Delete</a>
                                     </td>
                                 </tr>
                             @empty
@@ -37,6 +38,10 @@
                             @endforelse
                         </tbody>
                     </table>
+                    <!-- Pagination Links -->
+                    <div class="d-flex justify-content-end">
+                        {{ $users->links('pagination::bootstrap-4') }}
+                    </div>
                 </div>
             </div>
         </div>
