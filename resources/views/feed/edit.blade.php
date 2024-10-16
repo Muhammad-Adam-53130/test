@@ -20,7 +20,7 @@
                             @enderror
                             <label for="title">{{ __('Title') }}</label>
                         </div>
-                        <div id="counterTitle" class="mt-1 text-muted small">0 / 100 characters</div>
+                        <div id="counterTitle" class="badge">0 / 100 characters</div>
                     </div>
                     <div class="fv-row mb-3">
                         <div class="form-floating">
@@ -32,7 +32,7 @@
                             @enderror
                             <label for="description">{{ __('Description') }}</label>
                         </div>
-                        <div id="counterDesc" class="mt-1 text-muted small">0 / 300 characters</div>
+                        <div id="counterDesc" class="badge">0 / 300 characters</div>
                     </div>
                     <div class="d-grid mb-10">
                         <button type="submit" class="btn btn-primary">
