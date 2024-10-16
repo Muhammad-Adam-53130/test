@@ -9,7 +9,7 @@
             <div class="card shadow">
                 <div class="card-body">
                     <div class="d-flex align-items-end mb-3">
-                        <a href="{{ route('user.index') }}" class="btn btn-secondary">
+                        <a href="{{ route('user.index') }}" class="btn btn-outline-secondary">
                             {{ __('Back') }}
                         </a>
                     </div>
