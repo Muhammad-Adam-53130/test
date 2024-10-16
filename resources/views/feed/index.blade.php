@@ -22,7 +22,11 @@
                                         <h5 class="card-title text-primary">{{ $feed->title }}</h5>
                                         <p class="card-text">{{ $feed->description }}</p>
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <span class="text-muted">{{ $feed->created_at->diffForHumans() }}</span>
+                                            @if ($feed->updated_at != $feed->created_at)
+                                                <span class="text-muted"><i>Edited {{ $feed->updated_at->diffForHumans() }}</i></span>
+                                            @else
+                                                <span class="text-muted">{{ $feed->created_at->diffForHumans() }}</span>
+                                            @endif
                                             @if (Auth::id() == $feed->user_id)
                                                 <div>
                                                     <a href="{{ route('feed.edit', ['id' => Crypt::encryptString($feed->id)]) }}"
