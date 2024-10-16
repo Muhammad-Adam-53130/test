@@ -45,8 +45,8 @@ class FeedController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:100',
-            'description' => 'required|string|max:300',
+            'title' => 'required|string|max:100|min:3',
+            'description' => 'required|string|max:300|min:3',
         ]);
 
         // Find the user and update their details
@@ -110,8 +110,8 @@ class FeedController extends Controller
 
         // Validate the incoming request data
         $request->validate([
-            'title' => 'required|string|max:100',
-            'description' => 'required|string|max:300',
+            'title' => 'required|string|max:100|min:3',
+            'description' => 'required|string|max:300|min:3',
         ]);
 
         // Find the user and update their details
