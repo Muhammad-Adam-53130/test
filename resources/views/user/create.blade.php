@@ -7,7 +7,7 @@
     <div class="py-5">
         <div class="container">
             <div class="col-md-6 mx-auto">
-                <form action="{{ route('users.store') }}" method="POST"
+                <form action="{{ route('user.store') }}" method="POST"
                     class="form w-100">
                     @csrf
                     <div class="fv-row mb-3">
@@ -60,7 +60,7 @@
                         <button type="submit" class="btn btn-primary">
                             {{ __('Submit') }}
                         </button>
-                        <a href="{{ route('users.user') }}" class="btn btn-secondary mt-2">
+                        <a href="{{ route('user.index') }}" class="btn btn-secondary mt-2">
                             {{ __('Back') }}
                         </a>
                     </div>

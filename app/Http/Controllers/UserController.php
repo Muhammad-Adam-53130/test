@@ -19,7 +19,7 @@ class UserController extends Controller
         $data = [
             'users' => User::paginate(5),
         ];
-        return view('user.user', $data);
+        return view('user.index', $data);
     }
 
     /**
@@ -27,7 +27,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('user.user-create');
+        return view('user.create');
     }
 
     /**
@@ -57,7 +57,7 @@ class UserController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
 
-        return redirect()->route('users.user')->with('success', __('User successfully created.'));
+        return redirect()->route('user.index')->with('success', __('User successfully created.'));
     }
 
     /**
@@ -81,7 +81,7 @@ class UserController extends Controller
 
         $user = User::findOrFail($id);
 
-        return view('user.user-update', compact('user'));
+        return view('user.edit', compact('user'));
     }
 
     /**
@@ -114,7 +114,7 @@ class UserController extends Controller
         $user->save();
 
         // Redirect with a success message
-        return redirect()->route('users.user')->with('success', 'User updated successfully.');
+        return redirect()->route('user.index')->with('success', 'User updated successfully.');
     }
 
     /**
@@ -131,6 +131,6 @@ class UserController extends Controller
         $user = User::where('id', $id)->firstOrFail();
         $user->forceDelete();
 
-        return redirect()->route('users.user')->with('success', 'User successfully deleted');
+        return redirect()->route('user.index')->with('success', 'User successfully deleted');
     }
 }
