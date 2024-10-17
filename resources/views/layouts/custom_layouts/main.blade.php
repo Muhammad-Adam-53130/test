@@ -24,7 +24,6 @@
 <body class="d-flex flex-column min-vh-100 font-sans antialiased">
     @include('components.custom_components.navbar')
     @include('components.custom_components.status_message')
-    @include('components.custom_components.error-validate')
     <main class="flex-fill overflow-auto container" style="max-height: calc(100vh - 130px);">
         @yield('content')
     </main>
