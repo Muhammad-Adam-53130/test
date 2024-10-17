@@ -5,5 +5,5 @@ use Illuminate\Http\Request;
 
 Route::get('/form/{name?}', function(Request $request, $name = null) {
     $name = $request->query('name', $name ?? 'no data');
-    return view('form', ['name' => $name]);
+    return view('pages.form', ['name' => $name]);
 })->name('form');

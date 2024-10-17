@@ -28,7 +28,7 @@ class FeedController extends Controller
             'feeds' => $feeds,
         ];
 
-        return view('feed.index', $data);
+        return view('pages.feed.index', $data);
     }
 
     /**
@@ -36,7 +36,7 @@ class FeedController extends Controller
      */
     public function create()
     {
-        return view('feed.create');
+        return view('pages.feed.create');
     }
 
     /**
@@ -93,7 +93,7 @@ class FeedController extends Controller
 
         $feed = Feed::findOrFail($id);
 
-        return view('feed.edit', $data, compact('feed'));
+        return view('pages.feed.edit', $data, compact('feed'));
     }
 
     /**

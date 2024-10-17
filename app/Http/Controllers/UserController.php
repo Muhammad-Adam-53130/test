@@ -19,7 +19,7 @@ class UserController extends Controller
         $data = [
             'users' => User::paginate(5),
         ];
-        return view('user.index', $data);
+        return view('pages.user.index', $data);
     }
 
     /**
@@ -27,7 +27,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('user.create');
+        return view('pages.user.create');
     }
 
     /**
@@ -81,7 +81,7 @@ class UserController extends Controller
 
         $user = User::findOrFail($id);
 
-        return view('user.edit', compact('user'));
+        return view('pages.user.edit', compact('user'));
     }
 
     /**
