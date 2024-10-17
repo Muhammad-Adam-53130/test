@@ -18,11 +18,16 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 </head>
 
-<body class="font-sans antialiased">
+<body class="d-flex flex-column min-vh-100 font-sans antialiased">
     @include('components.custom_components.navbar')
     @include('components.custom_components.status_message')
     @include('components.custom_components.error-validate')
-    @yield('content')
+    <main class="flex-fill overflow-auto container" style="max-height: calc(100vh - 115px);">
+        @yield('content')
+    </main>
+    <footer class="text-white text-center text-lg-start bg-body-tertiary mt-auto" data-bs-theme="dark">
+        @include('components.custom_components.footer-main')
+    </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
