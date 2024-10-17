@@ -19,7 +19,7 @@
 </head>
 
 <body class="font-sans antialiased">
-    @include('layouts.custom_layouts.status_message')
+    @include('components.custom_components.status_message')
     @include('components.custom_components.error-validate')
     @yield('content')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
