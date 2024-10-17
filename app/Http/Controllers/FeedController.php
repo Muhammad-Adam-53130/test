@@ -7,6 +7,7 @@ use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Gate;
 
 class FeedController extends Controller
 {
@@ -62,9 +63,11 @@ class FeedController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Feed $feed)
+    public function show(Request $request, Feed $feed)
     {
-        //
+        Gate::authorize('update', $feed);
+        Gate::authorize('edit', $feed);
+        Gate::authorize('destroy', $feed);
     }
 
     /**
@@ -78,6 +81,9 @@ class FeedController extends Controller
             return redirect()->back()->with('error', 'ID not valid.');
         }
 
+        $feed = Feed::findOrFail($id);
+        Gate::authorize('edit', $feed);
+
         // Retrieve and decrypt the user_id from the query string
         $userId = $request->query('user_id');
         $userId = $userId ? Crypt::decryptString($userId) : null;
@@ -90,8 +96,6 @@ class FeedController extends Controller
         $data = [
             'feeds' => $feeds,
         ];
-
-        $feed = Feed::findOrFail($id);
 
         return view('pages.feed.edit', $data, compact('feed'));
     }
@@ -108,6 +112,9 @@ class FeedController extends Controller
             abort(404, 'Invalid id');
         }
 
+        $feed = Feed::findOrFail($id);
+        Gate::authorize('update', $feed);
+
         // Validate the incoming request data
         $request->validate([
             'title' => 'required|string|max:100|min:3',
@@ -115,7 +122,6 @@ class FeedController extends Controller
         ]);
 
         // Find the user and update their details
-        $feed = Feed::findOrFail($id);
         $feed->title = $request->input('title');
         $feed->description = $request->input('description');
         $feed->save();
@@ -136,6 +142,7 @@ class FeedController extends Controller
         }
 
         $feed = feed::where('id', $id)->firstOrFail();
+        Gate::authorize('destroy', $feed);
         $feed->forceDelete();
 
         return redirect()->route('feed.index', ['user_id' => Crypt::encryptString($feed->user_id)])->with('success', __('Feed successfully deleted.'));

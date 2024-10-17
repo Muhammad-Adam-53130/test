@@ -16,13 +16,16 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bad+Script&family=Zeyada&display=swap');
+    </style>
 </head>
 
 <body class="d-flex flex-column min-vh-100 font-sans antialiased">
     @include('components.custom_components.navbar')
     @include('components.custom_components.status_message')
     @include('components.custom_components.error-validate')
-    <main class="flex-fill overflow-auto container" style="max-height: calc(100vh - 115px);">
+    <main class="flex-fill overflow-auto container" style="max-height: calc(100vh - 130px);">
         @yield('content')
     </main>
     <footer class="text-white text-center text-lg-start bg-body-tertiary mt-auto" data-bs-theme="dark">
