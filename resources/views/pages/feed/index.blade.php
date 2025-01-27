@@ -67,7 +67,7 @@
     </div>
 @endsection
 <script>
-    function confirmDelete(event, userId) {
+    function confirmDelete(event, feedId) {
         // Prevent the link from navigating
         event.preventDefault();
 
@@ -81,7 +81,7 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 // If confirmed, submit the form
-                document.getElementById('delete-form-' + userId).submit();
+                document.getElementById('delete-form-' + feedId).submit();
                 Swal.fire(
                     'Deleted!',
                     'The feed has been deleted.',
