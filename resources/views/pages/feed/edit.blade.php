@@ -34,6 +34,21 @@
                         </div>
                         <div id="counterDesc" class="badge">0 / 300 characters</div>
                     </div>
+                    @forelse ($tags as $tag)
+                        <div class="fv-row mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input @error('tags') is-invalid @enderror" type="checkbox"
+                                    id="tag_{{ $tag->id }}" value="{{ $tag->id }}" name="tags[]"
+                                    {{ in_array($tag->id, $feed->tags->pluck('id')->toArray()) ? 'checked' : '' }}>
+                                @error('tags')
+                                    <span class="invalid-feedback">{{ $message }}</span>
+                                @enderror
+                                <label class="form-check-label" for="tag_{{ $tag->id }}">{{ $tag->name }}</label>
+                            </div>
+                        </div>
+                    @empty
+                        <p>No tags available</p>
+                    @endforelse
                     <div class="d-grid mb-10">
                         <button type="submit" class="btn btn-primary">
                             {{ __('Submit') }}

@@ -19,6 +19,9 @@
                             <div class="col-md-4 mb-4">
                                 <div class="card shadow-sm border-0" style="background-color: #f8f9fa;">
                                     <div class="card-body">
+                                        @foreach ($feed->tags as $tag)
+                                            <span class="badge bg-info mb-2">{{ $tag->name }}</span>
+                                        @endforeach
                                         <h5 class="card-title text-primary">{{ $feed->title }}</h5>
                                         <p class="card-text">{{ $feed->description }}</p>
                                         <div class="d-flex justify-content-between align-items-center">

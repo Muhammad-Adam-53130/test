@@ -12,4 +12,9 @@ class tag extends Model
     protected $fillable = [
         'name',
     ];
+
+    public function feeds()
+    {
+        return $this->belongsToMany(Feed::class)->withTimestamps()->withPivot('isActive');
+    }
 }
