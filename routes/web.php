@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -12,9 +13,8 @@ Route::middleware([
     'verified',
     'log-request'
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('pages.dashboard');
-    })->name('dashboard');
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     require_once __DIR__ . '/web/user/web.php';
 
