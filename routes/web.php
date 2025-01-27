@@ -25,4 +25,6 @@ Route::middleware([
     require_once __DIR__ . '/web/ai/web.php';
 
     require_once __DIR__ . '/web/about/web.php';
+
+    require_once __DIR__ . '/web/tag/web.php';
 });

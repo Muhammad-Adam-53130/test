@@ -12,7 +12,7 @@
                         <a href="{{ route('feed.create') }}" class="btn btn-outline-primary mb-2 me-2">
                             {{ __('Add New Feed') }}
                         </a>
-                        <a href="{{ route('user.create') }}" class="btn btn-outline-primary mb-2">
+                        <a href="{{ route('user.create') }}" class="btn btn-outline-primary mb-2 me-2">
                             {{ __('Add New User') }}
                         </a>
                     </div>
@@ -46,12 +46,12 @@
                                                     onclick="confirmDelete(event, {{ $user->id }})">
                                                     Delete
                                                 </a>
-                                                <form id="delete-form-{{ $user->id }}"
-                                                    action="{{ route('user.destroy', ['id' => Crypt::encryptString($user->id)]) }}"
-                                                    method="POST" style="display: none;">
-                                                    @csrf
-                                                </form>
                                             @endif
+                                            <form id="delete-form-{{ $user->id }}"
+                                                action="{{ route('user.destroy', ['id' => Crypt::encryptString($user->id)]) }}"
+                                                method="POST" style="display: none;">
+                                                @csrf
+                                            </form>
                                         </td>
                                     </tr>
                                 @empty

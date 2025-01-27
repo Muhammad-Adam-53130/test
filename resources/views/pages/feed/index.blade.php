@@ -23,7 +23,8 @@
                                         <p class="card-text">{{ $feed->description }}</p>
                                         <div class="d-flex justify-content-between align-items-center">
                                             @if ($feed->updated_at != $feed->created_at)
-                                                <span class="text-muted"><i>Edited {{ $feed->updated_at->diffForHumans() }}</i></span>
+                                                <span class="text-muted"><i>Edited
+                                                        {{ $feed->updated_at->diffForHumans() }}</i></span>
                                             @else
                                                 <span class="text-muted">{{ $feed->created_at->diffForHumans() }}</span>
                                             @endif
@@ -31,8 +32,8 @@
                                                 <div>
                                                     <a href="{{ route('feed.edit', ['id' => Crypt::encryptString($feed->id)]) }}"
                                                         class="btn btn-outline-primary btn-sm">Edit</a>
-                                                    <a href="#" class="btn btn-outline-danger btn-sm"
-                                                        onclick="event.preventDefault(); document.getElementById('delete-form-{{ $feed->id }}').submit();">
+                                                    <a href="javascript:void(0);" class="btn btn-outline-danger btn-sm"
+                                                        onclick="confirmDelete(event, {{ $feed->id }})">
                                                         Delete
                                                     </a>
                                                 </div>
@@ -62,3 +63,34 @@
         </div>
     </div>
 @endsection
+<script>
+    function confirmDelete(event, userId) {
+        // Prevent the link from navigating
+        event.preventDefault();
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'This action cannot be undone.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, keep it'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // If confirmed, submit the form
+                document.getElementById('delete-form-' + userId).submit();
+                Swal.fire(
+                    'Deleted!',
+                    'The feed has been deleted.',
+                    'success'
+                );
+            } else {
+                Swal.fire(
+                    'Cancelled',
+                    'The feed was not deleted.',
+                    'info'
+                );
+            }
+        });
+    }
+</script>

@@ -47,7 +47,10 @@
                     <a class="nav-link" href="{{ route('form') }}">Form</a>
                 </li>
                 <li class="nav-item {{ request()->routeIs('ai.index') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('ai.index') }}">Artificial Intelligence</a>
+                    <a class="nav-link" href="{{ route('ai.index') }}">AI</a>
+                </li>
+                <li class="nav-item {{ request()->routeIs('tag.index') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('tag.index') }}">Tag</a>
                 </li>
                 <li class="nav-item {{ request()->routeIs('about') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('about') }}">About</a>
