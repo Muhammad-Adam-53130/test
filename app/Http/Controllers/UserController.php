@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 
@@ -129,6 +130,7 @@ class UserController extends Controller
         }
 
         $user = User::where('id', $id)->firstOrFail();
+        DB::table('feeds')->where('user_id', $id)->delete();
         $user->forceDelete();
 
         return redirect()->route('user.index')->with('success', 'User successfully deleted');
