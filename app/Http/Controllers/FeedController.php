@@ -51,7 +51,7 @@ class FeedController extends Controller
         $request->validate([
             'title' => 'required|string|max:100|min:3',
             'description' => 'required|string|max:300|min:3',
-            'tags' => 'required | array',
+            'tags' => 'nullable | array',
         ]);
         // Find the user and update their details
         $feed = new Feed();
@@ -68,11 +68,18 @@ class FeedController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request, Feed $feed)
+    public function show(Request $request, Feed $feed, string $id)
     {
-        Gate::authorize('update', $feed);
-        Gate::authorize('edit', $feed);
-        Gate::authorize('destroy', $feed);
+        try {
+            $id = Crypt::decryptString($id);
+        } catch (DecryptException $e) {
+            return redirect()->back()->with('error', 'ID not valid.');
+        }
+
+        $feed = Feed::with('tags')->findOrFail($id);
+        $tags = tag::all();
+        
+        return view('pages.feed.show', compact('feed', 'tags'));
     }
 
     /**
@@ -125,7 +132,7 @@ class FeedController extends Controller
         $request->validate([
             'title' => 'required|string|max:100|min:3',
             'description' => 'required|string|max:300|min:3',
-            'tags' => 'required | array',
+            'tags' => 'nullable | array',
         ]);
 
         // Find the user and update their details

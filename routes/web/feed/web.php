@@ -10,4 +10,5 @@ Route::name('feed.')->prefix('feed')->group(function () {
     Route::get('/edit/{id}', [FeedController::class, 'edit'])->name('edit');
     Route::post('/update/{id}', [FeedController::class, 'update'])->name('update');
     Route::post('/delete/{id}', [FeedController::class, 'destroy'])->name('destroy');
+    Route::get('/show/{id}', [FeedController::class, 'show'])->name('show');
 });

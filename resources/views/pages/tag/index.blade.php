@@ -17,26 +17,26 @@
                         <table class="table table-hover gy-4 table-rounded table-row-bordered table-row-gray-200">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>name</th>
+                                    <th class="col-1">#</th>
+                                    <th>Name</th>
+                                    <th>Created At</th>
                                     <th class="text-end">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse($tags as $index => $tag)
                                     <tr>
-                                        <td>{{ $index + 1 }}.</td>
+                                        <td>{{ $tags->perPage() * ($tags->currentPage() - 1) + $index + 1 }}.</td>
                                         <td>
                                             {{ $tag->name }}
-                                            <br>
-                                            <span>
-                                                @if ($tag->updated_at != $tag->created_at)
-                                                    <span class="text-muted"><i>Edited
-                                                            {{ $tag->updated_at->diffForHumans() }}</i></span>
-                                                @else
-                                                    <span class="text-muted">{{ $tag->created_at->diffForHumans() }}</span>
-                                                @endif
-                                            </span>
+                                        </td>
+                                        <td>
+                                            @if ($tag->updated_at != $tag->created_at)
+                                                <span class="text-muted"><i>Edited
+                                                        {{ $tag->updated_at->diffForHumans() }}</i></span>
+                                            @else
+                                                <span class="text-muted">{{ $tag->created_at->diffForHumans() }}</span>
+                                            @endif
                                         </td>
                                         <td class="text-end">
                                             <a href="javascript:void(0);" class="btn btn-outline-danger"

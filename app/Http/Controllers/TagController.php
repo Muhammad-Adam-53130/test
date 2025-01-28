@@ -50,6 +50,7 @@ class TagController extends Controller
         }
 
         $tag = tag::where('id', $id)->firstOrFail();
+        \DB::table('feed_tag')->where('tag_id', $id)->delete();
         $tag->forceDelete();
 
         return redirect()->route('tag.index')->with('success', 'Tag successfully deleted');

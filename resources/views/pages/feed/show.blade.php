@@ -1,19 +1,19 @@
 @extends('layouts.custom_layouts.main')
 @section('content')
     <div class="mt-4 text-center">
-        <h1>Feed Create</h1>
-        <p>This is feed create page.</p>
+        <h1>Feed View</h1>
+        <p>This is feed view page.</p>
     </div>
     <div class="py-5">
         <div class="container">
             <div class="col-md-6 mx-auto">
-                <form action="{{ route('feed.store') }}" method="POST" class="form w-100">
+                <form method="POST" class="form w-100">
                     @csrf
                     <div class="fv-row mb-3">
                         <div class="form-floating">
                             <textarea id="title" class="form-control bg-transparent @error('title') is-invalid @enderror"
                                 placeholder="{{ __('Title') }}" name="title" required autocorrect="off" autocomplete="off" rows="1"
-                                oninput="autoResize(this); updateCounterTitle(this)"></textarea>
+                                oninput="autoResize(this); updateCounterTitle(this)" disabled>{{ old('title', $feed->title) }}</textarea>
                             @error('title')
                                 <span class="invalid-feedback">{{ $message }}</span>
                             @enderror
@@ -25,7 +25,7 @@
                         <div class="form-floating">
                             <textarea id="description" class="form-control bg-transparent @error('description') is-invalid @enderror"
                                 placeholder="{{ __('Description') }}" name="description" required autocorrect="off" autocomplete="off"
-                                rows="1" oninput="autoResize(this); updateCounterDesc(this)"></textarea>
+                                rows="1" oninput="autoResize(this); updateCounterDesc(this)" disabled>{{ old('description', $feed->description) }}</textarea>
                             @error('description')
                                 <span class="invalid-feedback">{{ $message }}</span>
                             @enderror
@@ -38,9 +38,10 @@
                             <div class="card-body">
                                 @forelse ($tags as $tag)
                                     <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" id="tag"
-                                            class="form-check-input bg-transparent @error('tag') is-invalid @enderror"
-                                            value="{{ $tag->id }}" name="tags[]" id="tag_{{ $tag->id }}"></input>
+                                        <input class="form-check-input @error('tags') is-invalid @enderror" type="checkbox"
+                                            id="tag_{{ $tag->id }}" value="{{ $tag->id }}" name="tags[]"
+                                            {{ in_array($tag->id, $feed->tags->pluck('id')->toArray()) ? 'checked' : '' }}
+                                            disabled style="pointer-events: none; opacity: 1;">
                                         <label class="form-check-label"
                                             for="tag_{{ $tag->id }}">{{ $tag->name }}</label>
                                     </div>
@@ -52,15 +53,23 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="d-grid mb-10">
-                        <button type="submit" class="btn btn-primary">
-                            {{ __('Submit') }}
-                        </button>
-                        <a href="{{ route('user.index') }}" class="btn btn-secondary mt-2">
+                        <a href="{{ route('feed.edit', ['id' => Crypt::encryptString($feed->id)]) }}"
+                            class="btn btn-primary mt-2">Edit</a>
+                        <a href="javascript:void(0);" class="btn btn-danger mt-2"
+                            onclick="confirmDelete(event, {{ $feed->id }})">
+                            Delete
+                        </a>
+                        <a href="{{ route('feed.index', ['user_id' => Crypt::encryptString($feed->user_id)]) }}"
+                            class="btn btn-secondary mt-2">
                             {{ __('Back') }}
                         </a>
                     </div>
+                    <form id="delete-form-{{ $feed->id }}"
+                        action="{{ route('feed.destroy', ['id' => Crypt::encryptString($feed->id)]) }}" method="POST"
+                        style="display: none;">
+                        @csrf
+                    </form>
                 </form>
             </div>
         </div>
@@ -112,5 +121,35 @@
             updateCounterDesc(descriptionTextarea);
             autoResize(descriptionTextarea);
         });
+
+        function confirmDelete(event, feedId) {
+            // Prevent the link from navigating
+            event.preventDefault();
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'This action cannot be undone.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, keep it'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // If confirmed, submit the form
+                    document.getElementById('delete-form-' + feedId).submit();
+                    Swal.fire(
+                        'Deleted!',
+                        'The feed has been deleted.',
+                        'success'
+                    );
+                } else {
+                    Swal.fire(
+                        'Cancelled',
+                        'The feed was not deleted.',
+                        'info'
+                    );
+                }
+            });
+        }
     </script>
 @endsection
