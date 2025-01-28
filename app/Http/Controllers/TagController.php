@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\tag;
+use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 
@@ -39,6 +40,49 @@ class TagController extends Controller
         $tag->save();
 
         return redirect()->route('tag.index')->with('success', __('Tag successfully created.'));
+    }
+
+    public function edit(Request $request, string $id)
+    {
+        try {
+            $id = Crypt::decryptString($id);
+        } catch (DecryptException $e) {
+            return redirect()->back()->with('error', 'ID not valid.');
+        }
+
+        $tag = tag::findOrFail($id);
+        $data = [
+            'tag' => $tag,
+        ];
+
+        return view('pages.tag.edit', $data);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        // Decrypt the user ID
+        try {
+            $id = Crypt::decryptString($id);
+        } catch (DecryptException $e) {
+            return redirect()->back()->with('error', 'ID not valid.');
+        }
+
+        $tag = tag::findOrFail($id);
+
+        // Validate the incoming request data
+        $request->validate([
+            'name' => 'required|string|max:20|unique:tags,name',
+        ]);
+
+        // Find the user and update their details
+        $tag->name = $request->input('name');
+        $tag->save();
+
+        // Redirect with a success message
+        return redirect()->route('tag.index')->with('success', __('Feed updated successfully.'));
     }
 
     public function destroy(string $id)

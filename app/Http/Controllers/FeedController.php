@@ -25,7 +25,7 @@ class FeedController extends Controller
         // Optionally filter feeds by user_id if provided
         $feeds = Feed::with('tags')->when($userId, function ($query) use ($userId) {
             return $query->where('user_id', $userId);
-        })->paginate(6);
+        })->active()->paginate(6);
 
         $data = [
             'feeds' => $feeds,

@@ -56,20 +56,11 @@
                     <div class="d-grid mb-10">
                         <a href="{{ route('feed.edit', ['id' => Crypt::encryptString($feed->id)]) }}"
                             class="btn btn-primary mt-2">Edit</a>
-                        <a href="javascript:void(0);" class="btn btn-danger mt-2"
-                            onclick="confirmDelete(event, {{ $feed->id }})">
-                            Delete
-                        </a>
                         <a href="{{ route('feed.index', ['user_id' => Crypt::encryptString($feed->user_id)]) }}"
                             class="btn btn-secondary mt-2">
                             {{ __('Back') }}
                         </a>
                     </div>
-                    <form id="delete-form-{{ $feed->id }}"
-                        action="{{ route('feed.destroy', ['id' => Crypt::encryptString($feed->id)]) }}" method="POST"
-                        style="display: none;">
-                        @csrf
-                    </form>
                 </form>
             </div>
         </div>
@@ -121,35 +112,5 @@
             updateCounterDesc(descriptionTextarea);
             autoResize(descriptionTextarea);
         });
-
-        function confirmDelete(event, feedId) {
-            // Prevent the link from navigating
-            event.preventDefault();
-
-            Swal.fire({
-                title: 'Are you sure?',
-                text: 'This action cannot be undone.',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, delete it!',
-                cancelButtonText: 'No, keep it'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // If confirmed, submit the form
-                    document.getElementById('delete-form-' + feedId).submit();
-                    Swal.fire(
-                        'Deleted!',
-                        'The feed has been deleted.',
-                        'success'
-                    );
-                } else {
-                    Swal.fire(
-                        'Cancelled',
-                        'The feed was not deleted.',
-                        'info'
-                    );
-                }
-            });
-        }
     </script>
 @endsection

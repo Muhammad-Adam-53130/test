@@ -33,12 +33,20 @@
                                             @endif
                                             @if (Auth::id() == $feed->user_id)
                                                 <div>
+                                                    <a href="javascript:void(0);" class="btn btn-outline-danger btn-sm"
+                                                        onclick="confirmDelete(event, {{ $feed->id }})">
+                                                        Delete
+                                                    </a>
                                                     <a href="{{ route('feed.show', ['id' => Crypt::encryptString($feed->id)]) }}"
                                                         class="btn btn-outline-primary btn-sm">View</a>
-                                                    
                                                 </div>
                                             @endif
                                         </div>
+                                        <form id="delete-form-{{ $feed->id }}"
+                                            action="{{ route('feed.destroy', ['id' => Crypt::encryptString($feed->id)]) }}"
+                                            method="POST" style="display: none;">
+                                            @csrf
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -58,3 +66,34 @@
         </div>
     </div>
 @endsection
+<script>
+    function confirmDelete(event, feedId) {
+        // Prevent the link from navigating
+        event.preventDefault();
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'This action cannot be undone.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, keep it'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // If confirmed, submit the form
+                document.getElementById('delete-form-' + feedId).submit();
+                Swal.fire(
+                    'Deleted!',
+                    'The feed has been deleted.',
+                    'success'
+                );
+            } else {
+                Swal.fire(
+                    'Cancelled',
+                    'The feed was not deleted.',
+                    'info'
+                );
+            }
+        });
+    }
+</script>

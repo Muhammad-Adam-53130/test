@@ -17,10 +17,10 @@
                         <table class="table table-hover gy-4 table-rounded table-row-bordered table-row-gray-200">
                             <thead>
                                 <tr>
-                                    <th class="col-1">#</th>
+                                    <th>#</th>
                                     <th>Name</th>
-                                    <th>Created At</th>
-                                    <th class="text-end">Action</th>
+                                    <th>Action At</th>
+                                    <th class="text-end col-2">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -38,8 +38,12 @@
                                                 <span class="text-muted">{{ $tag->created_at->diffForHumans() }}</span>
                                             @endif
                                         </td>
-                                        <td class="text-end">
-                                            <a href="javascript:void(0);" class="btn btn-outline-danger"
+                                        <td class="d-flex flex-column flex-sm-row">
+                                            <a href="{{ route('tag.edit', ['id' => Crypt::encryptString($tag->id)]) }}"
+                                                class="btn btn-outline-primary flex-fill mb-2 mb-sm-0 me-sm-2">
+                                                Edit
+                                            </a>
+                                            <a href="javascript:void(0);" class="btn btn-outline-danger flex-fill"
                                                 onclick="confirmDelete(event, {{ $tag->id }})">
                                                 Delete
                                             </a>
@@ -52,7 +56,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="3" class="text-center">Data Not Found</td>
+                                        <td colspan="4" class="text-center">Data Not Found</td>
                                     </tr>
                                 @endforelse
                             </tbody>
