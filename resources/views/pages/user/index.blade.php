@@ -15,6 +15,9 @@
                         <a href="{{ route('user.create') }}" class="btn btn-outline-primary mb-2 me-2">
                             {{ __('Add New User') }}
                         </a>
+                        <a href="{{ route('feed.index') }}" class="btn btn-outline-secondary mb-2 me-2">
+                            {{ __('All Feed') }}
+                        </a>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-hover gy-4 table-rounded table-row-bordered table-row-gray-200">

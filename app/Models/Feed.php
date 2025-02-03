@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\isActiveScope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -35,6 +36,16 @@ class Feed extends Model
     {
         $query->where('is_active', true);
     }
+
+    public function scopeInactive(Builder $query): void
+    {
+        $query->where('is_active', false);
+    }
+
+    // protected static function booted()
+    // {
+    //     static::addGlobalScope(new isActiveScope);
+    // }
 
     // Mutator for the 'title' attribute
     public function setTitleAttribute($value)

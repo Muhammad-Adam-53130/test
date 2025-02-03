@@ -3,7 +3,7 @@
     <div class="mt-4 text-center">
         <h1>Feed Create</h1>
         <p>This is feed create page.</p>
-    </div>
+    </div>  
     <div class="py-5">
         <div class="container">
             <div class="col-md-6 mx-auto">
@@ -40,7 +40,8 @@
                                     <div class="form-check form-switch">
                                         <input class="form-check-input" type="checkbox" id="tag"
                                             class="form-check-input bg-transparent @error('tag') is-invalid @enderror"
-                                            value="{{ $tag->id }}" name="tags[]" id="tag_{{ $tag->id }}"></input>
+                                            value="{{ $tag->id }}" name="tags[]"
+                                            id="tag_{{ $tag->id }}"></input>
                                         <label class="form-check-label"
                                             for="tag_{{ $tag->id }}">{{ $tag->name }}</label>
                                     </div>

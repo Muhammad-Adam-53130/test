@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\Mailer;
 use App\Models\Feed;
 use App\Models\tag;
 use DB;
@@ -10,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Gate;
+use Mail;
 
 class FeedController extends Controller
 {
@@ -61,6 +63,12 @@ class FeedController extends Controller
         $feed->save();
 
         $feed->tags()->attach($request['tags']);
+
+        $title = $feed->title;
+        $description = $feed->description;
+        $email = 'test2@test.com';
+
+        $this->sendEmail($email, $title, $description);
 
         return redirect()->route('feed.index', ['user_id' => Crypt::encryptString($feed->user_id)])->with('success', __('Feed successfully created.'));
     }
@@ -146,6 +154,12 @@ class FeedController extends Controller
         // Sync the tags (attach new, detach old)
         $feed->tags()->sync($newTags);
 
+        $title = $feed->title;
+        $description = $feed->description;
+        $email = 'test2@test.com';
+
+        $this->sendEmail($email, $title, $description);
+
         // Redirect with a success message
         return redirect()->route('feed.index', ['user_id' => Crypt::encryptString($feed->user_id)])->with('success', __('Feed updated successfully.'));
     }
@@ -167,5 +181,18 @@ class FeedController extends Controller
         $feed->forceDelete();
 
         return redirect()->route('feed.index', ['user_id' => Crypt::encryptString($feed->user_id)])->with('success', __('Feed successfully deleted.'));
+    }
+
+    public function sendEmail(string $email, $title, $description)
+    {
+        $data = [
+            'subject' => 'Feed Notification',
+            'view' => 'emails.feed-email',
+            'title' => $title,
+            'description' => $description,
+        ];
+
+        // Send the email
+        Mail::to($email)->send(new Mailer($data));
     }
 }
